@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:57:56 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 02:11:31 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/14 00:09:15 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	ft_valid_pos_bonus(t_cube *cube, double x, double y)
 	if (cube->map[(int)x][(int)y] == OPENED_DOOR)
 		return (OPENED_DOOR);
 	if (cube->map[(int)x][(int)y] <= ENEMY && cube->animation)
-	{
 		cube->enemy = 1;
-	}
 	return (0);
 }
 
@@ -76,33 +74,54 @@ static void	ft_free_textures(t_cube *cube)
 		mlx_destroy_image(cube->mlx, cube->sprites[i].img_ptr);
 }
 
-void	ft_error(char *s1, char *s2, char *s3, t_cube *cube)
+void	ft_free(t_cube *cube)
 {
-	write(2, "error: ", 7);
-	if (s1)
-		write(2, s1, ft_strlen(s1));
-	if (s2)
-		write(2, s2, ft_strlen(s2));
-	if (s3)
-		free(s3);
-	write(2, "\n", 1);
-	ft_free_exit(cube);
+	int	i;
+
+	i = -1;
+	if (cube->map)
+	{
+		while (++i < cube->map_lenght)
+			free(cube->map[i]);
+		free(cube->map);
+	}
+	if (cube->fd != -1)
+		close(cube->fd);
+	if (cube->img && cube->img->img_ptr)
+		mlx_destroy_image(cube->mlx, cube->img->img_ptr);
+	if (cube->mlx_win)
+		mlx_destroy_window(cube->mlx, cube->mlx_win);
+	ft_free_textures(cube);
+	if (cube->mlx)
+		mlx_destroy_display(cube->mlx);
+	if (cube->mlx)
+		free(cube->mlx);
 }
 
-int	ft_atoi_cube(char c)
+bool	ft_check_player_position(t_cube *cube)
 {
-	if (c == ' ')
-		return (1);
-	if (c == '0' || c == '1')
-		return (c - 48);
-	if (c == 'N' || \
-		c == 'S' || \
-		c == 'E' || \
-		c == 'W')
-		return (c);
-	if (c == 'D')
-		return (CLOSED_DOOR);
-	if (c == 'X')
-		return (ENEMY);
-	return (50);
+	if (ft_valid_pos_bonus(cube, cube->player.x, cube->player.y) > 0)
+	{
+		if (ft_valid_pos_bonus(cube, cube->player.prev_x, cube->player.y) <= 0)
+			cube->player.x = cube->player.prev_x;
+		else if (ft_valid_pos_bonus(cube, \
+			cube->player.x, cube->player.prev_y) <= 0)
+			cube->player.y = cube->player.prev_y;
+		else
+			return (CANCEL_THE_MOVEMENT);
+	}
+	if (ft_valid_pos_enemy(cube, cube->player.x, cube->player.y) <= ENEMY)
+	{
+		if (ft_valid_pos_enemy(cube, cube->player.prev_x, \
+			cube->player.y) > ENEMY && \
+			ft_valid_pos_bonus(cube, cube->player.prev_x, cube->player.y) <= 0)
+			cube->player.x = cube->player.prev_x;
+		else if (ft_valid_pos_enemy(cube, \
+			cube->player.x, cube->player.prev_y) > ENEMY && \
+			ft_valid_pos_bonus(cube, cube->player.x, cube->player.prev_y) <= 0)
+			cube->player.y = cube->player.prev_y;
+		else
+			return (CANCEL_THE_MOVEMENT);
+	}
+	return (POSITION_IS_GOOD);
 }

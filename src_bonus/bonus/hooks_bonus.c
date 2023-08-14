@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 03:03:59 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 07:33:28 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 11:36:05 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ void	ft_update_image_bonus(t_cube *cube)
 		print_door_message(cube);
 	if (cube->minimap)
 		ft_minimap(cube);
+	if (cube->animation)
+	{
+		if (cube->weapon == SWORD)
+		{
+			if (!cube->attacking)
+				put_my_img_to_img(WIN_WIDTH * 0.6, WIN_HEIGHT - 250, \
+					cube->sprites[SWORD], cube->img);
+			else
+				put_my_img_to_img(WIN_WIDTH * 0.4, WIN_HEIGHT - 350, \
+					cube->sprites[SWORD2], cube->img);
+		}
+		else if (cube->weapon == GUN)
+		{
+			if (!cube->attacking)
+				put_my_img_to_img(WIN_WIDTH * 0.2, WIN_HEIGHT - 250, \
+					cube->sprites[GUN], cube->img);
+			else
+				put_my_img_to_img(WIN_WIDTH * 0.4, WIN_HEIGHT - 350, \
+					cube->sprites[GUN2], cube->img);
+		}
+	}
 }
 
 void	ft_key_hook_bonus(int key, t_cube *cube)
@@ -43,7 +64,10 @@ void	ft_key_hook_bonus(int key, t_cube *cube)
 	if (key == N_KEY && cube->height > -WIN_HEIGHT)
 		cube->height -= 10;
 	if (key == R_KEY)
+	{
 		cube->height = 1;
+		cube->player.fov = FOV;
+	}
 	ft_doors(key, cube);
 }
 
@@ -68,7 +92,27 @@ int	handle_mouse_click(int key, int x, int y, t_cube *cube)
 {
 	cube->mouse_x = x;
 	cube->mouse_y = y;
-	if (key)
-		return (1);
+	if (cube->win)
+		ft_levels(cube);
+	if (cube->lost)
+		ft_free_exit(cube);
+	if (cube->help_menu)
+		cube->help_menu = 0;
+	if (cube->escape && key)
+	{
+		ft_create_image(cube);
+		if (x < 520 && x > 250 && y < 550 && y > 410)
+		{
+			cube->escape = 0;
+			cube->start = ft_time();
+			if (!cube->welcome_window)
+			{
+				put_my_img_to_img(0, 0, cube->sprites[LANDING], cube->img);
+				ft_destroy_image(cube);
+			}
+		}
+		if (x < 880 && x > 630 && y < 530 && y > 420)
+			ft_free_exit(cube);
+	}
 	return (1);
 }

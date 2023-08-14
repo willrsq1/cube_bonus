@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 17:41:43 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 07:32:19 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 20:45:06 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,22 @@ void	ft_minimap(t_cube *cube)
 static void	ft_draw_enemies(t_cube *cube, double coef, int x, int y)
 {
 	y = 0;
+	if (!cube->animation)
+		return ;
 	while (y < cube->map_lenght)
 	{
 		x = 0;
 		while (cube->map[y][x] != END)
 		{
-			if ((cube->map[y][x] == ENEMY) \
-				&& cube->minimap && cube->animation)
+			if (cube->map[y][x] == ENEMY)
 				put_my_img_to_img((x - 1) * coef, (y - 1) * coef, \
 				cube->sprites[CAT1], cube->img);
+			if (cube->map[y][x] == HURT_ENEMY)
+				put_my_img_to_img((x - 1) * coef, (y - 1) * coef, \
+				cube->sprites[MINI_HURT], cube->img);
+			if (cube->map[y][x] == DEAD_ENEMY)
+				put_my_img_to_img((x - 0.5) * coef, (y - 0.5) * coef, \
+				cube->sprites[TOMB], cube->img);
 			x++;
 		}
 		y++;

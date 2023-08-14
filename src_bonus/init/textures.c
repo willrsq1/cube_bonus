@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 23:56:12 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/11 01:16:23 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 09:22:02 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,17 @@ static char	*check_error_element(char *s, t_cube *cube)
 		ft_free_exit(cube);
 	}
 	return (texture);
+}
+
+void	ft_error(char *s1, char *s2, char *s3, t_cube *cube)
+{
+	write(2, "error: ", 7);
+	if (s1)
+		write(2, s1, ft_strlen(s1));
+	if (s2)
+		write(2, s2, ft_strlen(s2));
+	if (s3)
+		free(s3);
+	write(2, "\n", 1);
+	ft_free_exit(cube);
 }

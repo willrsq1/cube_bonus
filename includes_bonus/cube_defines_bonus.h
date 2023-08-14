@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 13:20:38 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 08:08:50 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 20:44:41 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,21 @@
 # include <math.h>
 # include "../mlx_linux/mlx.h"
 # include <sys/time.h>
-
+# include <unistd.h>
 # define CLOSED_DOOR 2
+# define WALL 1
 # define END -1
 # define OPENED_DOOR -2
-# define ENEMY -3
-# define HURT_ENEMY -4
-# define DEAD_ENEMY -5
-# define NEW_ENEMY -6
+# define OPENING_DOOR1 -3
+# define OPENING_DOOR2 -4
+# define ENEMY -10
+# define HURT_ENEMY -11
+# define DEAD_ENEMY -12
+# define NEW_ENEMY -13
 
-# define SPAWN_TIME 30000
+# define SPAWN_TIME 5000
 # define ATTACK_RANGE_SWORD 2
+# define ATTACK_RANGE_GUN 6
 
 # define MINNIE 0
 # define CAT1 1
@@ -49,6 +53,16 @@
 # define CAT_DEAD 13
 # define SWORD 14
 # define SWORD2 15
+# define GUN 16
+# define GUN2 17
+# define LANDING 18
+# define PAUSE_LEFT 19
+# define PAUSE_RIGHT 20
+# define LOST 21
+# define HELP 22
+# define WIN 23
+# define TOMB 24
+# define MINI_HURT 25
 # define SPRITES_MAX_NB 30
 
 # define CD_COLOR 0x98FF98
@@ -62,9 +76,13 @@
 # define LEFT_ARROW 65361
 # define DOWN_ARROW 65364
 # define RIGHT_ARROW 65363
+# define ENTER_KEY 65293
+# define ONE_KEY 38 
+# define TWO_KEY 233 
 # define A_KEY 97
 # define Z_KEY 122
 # define M_KEY 109
+# define H_KEY 104
 # define P_KEY 112
 # define U_KEY 117
 # define J_KEY 106
@@ -80,7 +98,6 @@
 # define PII 6.283184999999999575948095298372209072113037109375
 # define PI3 4.7123889923095703125
 # define FOV 1.17072000
-# define WALL 1
 # define RESOLUTION 0.0001
 # define WIN_WIDTH 1300
 # define WIN_HEIGHT 800

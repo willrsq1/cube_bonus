@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 12:12:02 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 07:16:08 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 11:35:26 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	ft_raycasting(t_cube *cube, t_player *player)
 		distance *= cos(player->angle - angle) * player->fov;
 		draw_wall(distance, cube, pixel_column);
 		if (cube->enemy)
-		{
 			draw_enemy(cube, player, angle, pixel_column);
-		}
 		pixel_column++;
 		cube->enemy = 0;
 	}
@@ -85,7 +83,7 @@ static void	ft_texture(t_player *player, double x, double y, t_cube *cube)
 	if (abs((int)x) != abs((int)(x - player->vector_x * RESOLUTION)))
 		player->x_wall = fabs((int)y - y);
 	if (cube->map[(int)x][(int)y] == CLOSED_DOOR)
-		cube->id = DOOR;
+		cube->id = ft_cat_frame(cube);
 	else if (fabs((int)x - x) >= fabs((int)y - y))
 	{
 		if (abs((int)x) != abs((int)(x - player->vector_x * RESOLUTION)))
@@ -102,7 +100,7 @@ static void	ft_texture(t_player *player, double x, double y, t_cube *cube)
 	x -= player->vector_x * RESOLUTION;
 	y -= player->vector_y * RESOLUTION;
 	if (cube->map[(int)(x)][(int)(y)] == OPENED_DOOR)
-		cube->id = DOOR;
+		cube->id = ft_cat_frame(cube);
 }
 
 static void	draw_wall(double dist, t_cube *cube, int x)

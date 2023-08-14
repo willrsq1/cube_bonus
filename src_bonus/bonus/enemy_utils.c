@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 05:58:46 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 07:24:36 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:00:48 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	ft_cat_frame(t_cube *cube)
 		return (CAT_HURT);
 	if (cube->id == DEAD_ENEMY)
 		return (CAT_DEAD);
+	if (cube->id == ENEMY)
+		return (CAT0);
 	time = time % 500;
 	if (time > 750 / 2)
 		id = CAT4;
@@ -70,9 +72,7 @@ int	ft_cat_frame(t_cube *cube)
 		id = CAT2;
 	else
 		id = CAT1;
-	if (id)
-		return (id);
-	return (CAT0);
+	return (id);
 }
 
 int	ft_valid_pos_enemy(t_cube *cube, double x, double y)

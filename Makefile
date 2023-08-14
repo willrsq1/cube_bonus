@@ -39,8 +39,10 @@ SOURCES_BONUS =     0_main.c \
 					3_hooks.c \
 					4_images.c \
 					cube_utils.c \
+					hooks_interface.c \
 					hooks_utils.c \
 					raycasting_utils.c \
+					z_levels.c \
 					init/map.c \
 					init/textures.c \
 					init/colors.c \
@@ -59,6 +61,7 @@ SOURCES_BONUS =     0_main.c \
 					bonus/enemy_back.c \
 					bonus/enemy_utils.c \
 					bonus/update_img_loop.c \
+					bonus/pollution.c \
 
 MLX = mlx_linux
 ### OBJECTS ###

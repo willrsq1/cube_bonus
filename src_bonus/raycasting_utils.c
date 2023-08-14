@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 22:57:45 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/11 12:20:07 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 10:54:47 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ void	ft_wall_pixel(t_cube *cube, int x, int y, double colum_size)
 	y_wall = ((double)colum_size / (double)cube->sprites[cube->id].img_width);
 	y_wall = (y - (WIN_HEIGHT / 2 - (colum_size / 2) + cube->height)) / y_wall;
 	color = get_pixel_img(cube->sprites[cube->id], x_wall, y_wall);
-	if (color == 0xFFFFFF && (cube->id == DOOR || cube->id == BRICK))
+	if (color == 0xFFFFFF && cube->id >= CAT1 && cube->id <= CAT4)
 		color = PASTEL_PINK;
-	if (!(color == 0xFFFFFF && cube->id >= CAT1 && cube->id <= CAT4))
-		ft_pixel(cube->img, x, y, color);
+	ft_pixel(cube->img, x, y, color);
 }
 
 void	ft_pixel(t_img *img, int x, int y, int color)

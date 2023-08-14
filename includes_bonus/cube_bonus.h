@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 18:57:50 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/12 08:05:58 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/13 09:22:20 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,22 @@ typedef struct s_cube
 	t_img		sprites[SPRITES_MAX_NB];
 	time_t		start;
 	bool		enemy;
-	bool		sword;
+	bool		attacking;
+	bool		welcome_window;
+	bool		help_menu;
+	bool		lost;
+	bool		win;
+	bool		map_has_enemies;
+	bool		game_was_won;
+	int			escape;
+	int			weapon;
 	double		angle;
+	int			lvl;
 }	t_cube;
 
 /*	1_cube.c			*/
 
-void	ft_cube(char **argv);
+void	ft_cube(char **argv, int level);
 
 /*	2_raycasting.c		*/
 
@@ -146,8 +155,6 @@ void	print_map(int **map, int map_lenght, t_cube *cube);
 /*	textures.c			*/
 
 void	ft_textures_and_colors(t_cube *cube, int fd, char *s, int count);
-
-void	ft_cube(char **argv);
 
 int		**ft_map(char *path, t_cube *cube);
 time_t	ft_time(void);
@@ -217,5 +224,11 @@ void	draw_column_enemy(double dist, t_cube *cube, int x);
 int		ft_cat_frame(t_cube *cube);
 void	ft_key_enemy(int key, t_cube *cube);
 void	ft_jump(t_cube *cube);
+void	ft_create_image(t_cube *cube);
+void	ft_pollution(t_cube *cube, int **map);
+void	esc_key_function(int key, t_cube *cube);
+void	help_menu_function(int key, t_cube *cube);
 
+void	ft_free(t_cube *cube);
+void	ft_levels(t_cube *cube);
 #endif

@@ -6,7 +6,7 @@
 /*   By: wruet-su <william.ruetsuquet@gmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:25:12 by wruet-su          #+#    #+#             */
-/*   Updated: 2023/08/10 22:46:00 by wruet-su         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:37:34 by wruet-su         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,22 @@ static int	ft_encode_rgb(int red, int green, int blue)
 	if (red < 0 || green < 0 || blue < 0)
 		return (-1);
 	return (red << 16 | green << 8 | blue);
+}
+
+int	ft_atoi_cube(char c)
+{
+	if (c == ' ')
+		return (1);
+	if (c == '0' || c == '1')
+		return (c - 48);
+	if (c == 'N' || \
+		c == 'S' || \
+		c == 'E' || \
+		c == 'W')
+		return (c);
+	if (c == 'D')
+		return (CLOSED_DOOR);
+	if (c == 'X')
+		return (ENEMY);
+	return (50);
 }
